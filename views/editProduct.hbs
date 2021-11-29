@@ -48,25 +48,28 @@
                                     <th>Name</th>
                                     <th>Price</th>
                                     <th>Image</th>
-                                    <th>Status</th>
+                                    <th>Status</th>                                  
                                 </tr>
                             </thead>
                             <tbody>
                                 {{#each products}}
                                 <tr>
                                     <td>
-                                        <span class="custom-checkbox">
-                                            <input type="checkbox" id="checkbox3" name="options[]" value="1">
-                                            <label for="checkbox3"></label>
-                                        </span>
-                                        <a href="#editProductModal" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+                                        <a href="/editProduct/update/{{MASACH}}" class="edit">
+                                            <i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i>
+                                        </a>
                                     </td>
                                     <td>{{MASACH}}</td>
                                     <td>{{LOAISACH}}</td>
                                     <td>{{TENSACH}}</td>
                                     <td>{{GIA}}</td>
                                     <td>{{URL}}</td>
-                                    <td><span class="badge label-table badge-success">Active</span></td>
+                                    <td>
+                                        <input type="button" id ="{{MASACH}}" class="btn btn-{{COLORSTATUS}}" 
+                                        data-toggle="tooltip" data-placement="right" title="Change Status"
+                                        onclick="statusFunc(event)" value="{{STATUS}}">
+                                        </input>
+                                    </td>                          
                                 </tr>
                                 {{/each}}
                             </tbody>
@@ -94,52 +97,11 @@
 <!-- End Page content -->
 <!-- ============================================================== -->
 
-<!-- Form Edit Product -->
-<div id="editProductModal" class="modal fade">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <form>
-                <div class="modal-header">						
-                    <h4 class="modal-title">Edit Product</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                </div>
-                <div class="modal-body">					
-                    <div class="form-group">
-                        <label>Mã Sách</label>
-                        <input type="text" class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Tên Sách</label>
-                        <input type="text" class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Loại Sách</label>
-                        <input type="text" class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Giá</label>
-                        <input type="number" class="form-control" required>
-                    </div>	
-                    <div class="form-group">
-                        <label>Ảnh</label>
-                        <input type="text" class="form-control" required>
-                    </div>				
-                </div>
-                <div class="modal-footer">
-                    <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-                    <input type="submit" class="btn btn-info" value="Save">
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-<!-- End Form Edit Product -->
-
 <!-- Form Add product -->
 <div id="addProductModal" class="modal fade">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form>
+            <form method="POST" action="/editProduct/store">
                 <div class="modal-header">						
                     <h4 class="modal-title">Add Product</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -147,27 +109,26 @@
                 <div class="modal-body">					
                     <div class="form-group">
                         <label>Mã Sách</label>
-                        <input type="text" class="form-control" required>
+                        <input type="text" class="form-control" name="id" required>
                     </div>
                     <div class="form-group">
                         <label>Tên Sách</label>
-                        <input type="text" class="form-control" required>
+                        <input type="text" class="form-control" name="name" required>
                     </div>
                     <div class="form-group">
                         <label>Loại Sách</label>
-                        <input type="text" class="form-control" required>
+                        <input type="text" class="form-control" name="type" required>
                     </div>
                     <div class="form-group">
                         <label>Giá</label>
-                        <input type="number" class="form-control" required>
+                        <input type="number" class="form-control" name="price" required>
                     </div>
                     <div class="form-group">
                         <label>Ảnh</label>
-                        <input type="text" class="form-control" required>
+                        <input type="text" class="form-control" name="image" required>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
                     <input type="submit" class="btn btn-success" value="Add">
                 </div>
             </form>
@@ -175,3 +136,22 @@
     </div>
 </div>
 <!-- End Form add product -->
+
+<form name="deleteProduct" method="POST"></form>
+
+<script>
+    function statusFunc(event){
+        const formDelete = document.forms['deleteProduct'];
+        const btn = event.target;
+        if(btn.value == "Hiden")
+        {
+            formDelete.action = '/editProduct/active/' + btn.id;
+            formDelete.submit();
+        }
+        else
+        {
+            formDelete.action = '/editProduct/hiden/' + btn.id;
+            formDelete.submit();
+        }
+    }
+</script>

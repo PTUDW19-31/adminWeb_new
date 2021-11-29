@@ -5,6 +5,7 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const compression = require('compression');
 const helmet = require('helmet');
+const methodOverride = require('method-override');
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const productsRouter = require('./components/products/index')
@@ -18,12 +19,15 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(methodOverride('_method'));
 app.use(express.static(path.join(__dirname, 'public')));
-app.use("/public",express.static("public"));
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
+
+
 app.use('/editProduct', productsRouter);
+app.use('/users', usersRouter);
+app.use('/', indexRouter);
+
 
 
 // catch 404 and forward to error handler

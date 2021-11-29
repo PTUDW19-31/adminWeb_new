@@ -21,6 +21,11 @@ module.exports = function(sequelize, DataTypes) {
     URL: {
       type: DataTypes.STRING(45),
       allowNull: true
+    },
+    STATUS: {
+      type: DataTypes.STRING(20),
+      allowNull: true,
+      defaultValue: "Active"
     }
   }, {
     sequelize,

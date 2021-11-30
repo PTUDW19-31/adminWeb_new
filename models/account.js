@@ -1,27 +1,36 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('hoadon', {
-    SOHD: {
+  return sequelize.define('account', {
+    ID: {
       autoIncrement: true,
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true
     },
-    NGAYLAPHD: {
-      type: DataTypes.DATEONLY,
-      allowNull: true
+    EMAIL: {
+      type: DataTypes.STRING(200),
+      allowNull: false
     },
-    MAKH: {
+    PASSWORD: {
+      type: DataTypes.STRING(200),
+      allowNull: false
+    },
+    OWNER: {
       type: DataTypes.INTEGER,
-      allowNull: true,
+      allowNull: false,
       references: {
-        model: 'khachhang',
-        key: 'MAKH'
+        model: 'sach',
+        key: 'MASACH'
       }
+    },
+    STATUS: {
+      type: DataTypes.STRING(20),
+      allowNull: true,
+      defaultValue: "Active"
     }
   }, {
     sequelize,
-    tableName: 'hoadon',
+    tableName: 'account',
     timestamps: false,
     indexes: [
       {
@@ -29,14 +38,14 @@ module.exports = function(sequelize, DataTypes) {
         unique: true,
         using: "BTREE",
         fields: [
-          { name: "SOHD" },
+          { name: "ID" },
         ]
       },
       {
-        name: "fk_hoadon_khachhang",
+        name: "fk_account_sach",
         using: "BTREE",
         fields: [
-          { name: "MAKH" },
+          { name: "OWNER" },
         ]
       },
     ]

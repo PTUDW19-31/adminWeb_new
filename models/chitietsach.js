@@ -1,35 +1,30 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('khachhang', {
-    MAKH: {
-      autoIncrement: true,
+  return sequelize.define('chitietsach', {
+    MASACH: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      primaryKey: true
+      primaryKey: true,
+      references: {
+        model: 'sach',
+        key: 'MASACH'
+      }
     },
-    TENKH: {
+    TACGIA: {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    DIACHI: {
-      type: DataTypes.STRING(255),
-      allowNull: true
-    },
-    DIENTHOAI: {
-      type: DataTypes.STRING(50),
-      allowNull: true
-    },
-    GIOITINH: {
-      type: DataTypes.STRING(10),
-      allowNull: true
-    },
-    NGAYSINH: {
+    NGAYXB: {
       type: DataTypes.DATEONLY,
+      allowNull: true
+    },
+    MOTA: {
+      type: DataTypes.TEXT,
       allowNull: true
     }
   }, {
     sequelize,
-    tableName: 'khachhang',
+    tableName: 'chitietsach',
     timestamps: false,
     indexes: [
       {
@@ -37,7 +32,7 @@ module.exports = function(sequelize, DataTypes) {
         unique: true,
         using: "BTREE",
         fields: [
-          { name: "MAKH" },
+          { name: "MASACH" },
         ]
       },
     ]

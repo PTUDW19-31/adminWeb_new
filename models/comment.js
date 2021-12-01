@@ -1,39 +1,43 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('chitiethoadon', {
-    SOHD: {
+  return sequelize.define('comment', {
+    ID: {
+      autoIncrement: true,
       type: DataTypes.INTEGER,
       allowNull: false,
-      primaryKey: true,
-      references: {
-        model: 'hoadon',
-        key: 'SOHD'
-      }
+      primaryKey: true
     },
     MASACH: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      primaryKey: true,
       references: {
         model: 'sach',
         key: 'MASACH'
       }
     },
-    SOLUONG: {
+    MAKH: {
       type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'khachhang',
+        key: 'MAKH'
+      }
+    },
+    NOIDUNG: {
+      type: DataTypes.TEXT,
+      allowNull: false
+    },
+    CREATE_AT: {
+      type: DataTypes.DATE,
       allowNull: true
     },
-    DONGIA: {
-      type: DataTypes.FLOAT,
-      allowNull: true
-    },
-    THANHTIEN: {
-      type: DataTypes.FLOAT,
+    UPDATE_AT: {
+      type: DataTypes.DATE,
       allowNull: true
     }
   }, {
     sequelize,
-    tableName: 'chitiethoadon',
+    tableName: 'comment',
     timestamps: false,
     indexes: [
       {
@@ -41,12 +45,18 @@ module.exports = function(sequelize, DataTypes) {
         unique: true,
         using: "BTREE",
         fields: [
-          { name: "SOHD" },
-          { name: "MASACH" },
+          { name: "ID" },
         ]
       },
       {
-        name: "fk_chitiethoadon_sach",
+        name: "fk_comment_khachhang",
+        using: "BTREE",
+        fields: [
+          { name: "MAKH" },
+        ]
+      },
+      {
+        name: "fk_comment_sach",
         using: "BTREE",
         fields: [
           { name: "MASACH" },

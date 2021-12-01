@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # This file specifies files that are *not* uploaded to Google Cloud Platform
 # using gcloud. It follows the same syntax as .gitignore, with the addition of
 # "#!include" directives (which insert the entries of the given .gitignore-style
@@ -15,3 +16,6 @@
 
 # Node.js dependencies:
 node_modules/
+=======
+
+>>>>>>> cfc027366857301bf9ecb755c7a564a2b5bb5f6f

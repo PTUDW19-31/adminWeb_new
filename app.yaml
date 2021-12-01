@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 runtime: nodejs
 env: flex
 env_variables:
@@ -10,3 +11,9 @@ beta_settings:
 automatic_scaling:
   min_num_instances: 1
   max_num_instances: 2
+=======
+DB_DATABASE= DBBanHang
+DB_USERNAME= root
+DB_PASSWORD= 123456
+DB_HOST= localhost
+>>>>>>> cfc027366857301bf9ecb755c7a564a2b5bb5f6f

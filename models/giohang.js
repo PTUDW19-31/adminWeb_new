@@ -1,13 +1,13 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('chitiethoadon', {
-    SOHD: {
+  return sequelize.define('giohang', {
+    MAKH: {
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true,
       references: {
-        model: 'hoadon',
-        key: 'SOHD'
+        model: 'khachhang',
+        key: 'MAKH'
       }
     },
     MASACH: {
@@ -26,14 +26,10 @@ module.exports = function(sequelize, DataTypes) {
     DONGIA: {
       type: DataTypes.FLOAT,
       allowNull: true
-    },
-    THANHTIEN: {
-      type: DataTypes.FLOAT,
-      allowNull: true
     }
   }, {
     sequelize,
-    tableName: 'chitiethoadon',
+    tableName: 'giohang',
     timestamps: false,
     indexes: [
       {
@@ -41,12 +37,12 @@ module.exports = function(sequelize, DataTypes) {
         unique: true,
         using: "BTREE",
         fields: [
-          { name: "SOHD" },
+          { name: "MAKH" },
           { name: "MASACH" },
         ]
       },
       {
-        name: "fk_chitiethoadon_sach",
+        name: "fk_giohang_sach",
         using: "BTREE",
         fields: [
           { name: "MASACH" },

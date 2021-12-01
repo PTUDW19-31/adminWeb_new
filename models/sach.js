@@ -2,7 +2,8 @@ const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
   return sequelize.define('sach', {
     MASACH: {
-      type: DataTypes.STRING(50),
+      autoIncrement: true,
+      type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true
     },
@@ -15,10 +16,10 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: true
     },
     GIA: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.FLOAT,
       allowNull: true
     },
-    URL: {
+    IMAGE: {
       type: DataTypes.STRING(45),
       allowNull: true
     },

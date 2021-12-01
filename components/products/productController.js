@@ -25,6 +25,11 @@ exports.update = async (req, res, next) => {
 //list
 exports.list = async (req, res, next) => {
     const products = await productService.list();
+    //TODO: handle error here, case cannot query.
+    if(!products){
+        res.status(401).json("Something went wrong!");
+    } 
+    
     for(let items of products){
         if(items.STATUS == 'Hiden'){
             items.COLORSTATUS = 'danger'
@@ -32,7 +37,7 @@ exports.list = async (req, res, next) => {
         else{
             items.COLORSTATUS = 'success'
         }
-    }
+    }console.log('OKE');
     res.render('editProduct', { products });
 }
 

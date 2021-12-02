@@ -14,7 +14,7 @@ sequelize.authenticate()
   const app = require('../app');
   const debug = require('debug')('myapp:server');
     
-  const port = normalizePort(process.env.PORT || '3306');
+  const port = normalizePort(process.env.PORT || '3000');
   app.set('port', port);
 
   /**

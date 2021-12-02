@@ -1,13 +1,13 @@
 var express = require('express');
 var router = express.Router();
-
 const ProductController = require('./productController');
+const upload = require('../upload/multer');
 
 /* GET home page. */
 
 
 // add product
-router.post('/store', ProductController.store);
+router.post('/store', upload.single('image'), ProductController.store);
 
 // update product
 router.get('/update/:id', ProductController.update);

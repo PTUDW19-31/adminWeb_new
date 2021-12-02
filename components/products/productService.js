@@ -1,8 +1,13 @@
 //const { options, report } = require('.');
 const {models} = require('../../models')
 
-exports.list = () => {
-    return models.sach.findAll({ raw: true });
+
+
+
+
+
+exports.list = (page, itemPerPage) => {
+    return models.sach.findAndCountAll({ offset: page*itemPerPage, limit: itemPerPage, raw: true });
 };  
 
 exports.hiden = (req) => {
@@ -23,14 +28,13 @@ exports.active = (req) => {
     );
 }
 
-exports.store = (req) => {
+exports.store = (req, result) => {
     return models.sach.findOrCreate({
         where: {
-            MASACH: req.body.id,
             TENSACH: req.body.name,
             LOAISACH: req.body.type,
             GIA: req.body.price,
-            URL: req.body.image
+            IMAGE: result.secure_url
         }
     });
 }
@@ -50,7 +54,7 @@ exports.saveUpdate = (req) => {
             TENSACH: req.body.name,
             LOAISACH: req.body.type,
             GIA: req.body.price,
-            URL: req.body.image
+            IMAGE: req.body.image
         },
         { where: { MASACH: req.params.id } }
     );

@@ -8,7 +8,7 @@
             <div class="row">
                 <div class="col-12">
                     <div class="page-title-box">
-                        <h4 class="page-title">Product Table</h4>
+                        <h4 class="page-title">Account Table</h4>
                     </div>
                 </div>
             </div>     
@@ -17,18 +17,18 @@
             <div class="row">
                 <div class="col-sm-12">
                     <div class="card-box">
-                        <h4 class="header-title">Edit Product</h4>
+                        <h4 class="header-title">Edit Account</h4>
                         <p class="sub-header">
-                            from your Product Table.
+                            from your Account Table.
                         </p>
                         <div class="mb-2">
                             <div class="row">
                                 <div class="col-12 text-sm-center form-inline">
                                     <div class="form-group mr-2">
-                                        <a href="#addProductModal" data-toggle="modal">
+                                        <a href="#addAdminModal" data-toggle="modal">
                                             <button class="btn btn-primary">
                                                 <i class="mdi mdi-plus-circle mr-2"></i>
-                                                <span>Add Product</span>
+                                                <span>Add Admin Account</span>
                                             </button>
                                         </a>                                             
                                     </div>
@@ -42,12 +42,11 @@
                         <table id="demo-foo-addrow" class="table table-centered table-striped table-bordered mb-0 toggle-circle" data-page-size="7">
                             <thead>
                                 <tr>
-                                    <th>Edit</th>
                                     <th>ID</th>
-                                    <th>Type</th>
-                                    <th>Name</th>
-                                    <th>Price</th>
-                                    <th>Image</th>
+                                    <th>Email</th>
+                                    <th>Password</th>
+                                    <th>Owner</th>
+                                    <th>Role</th>
                                     <th>Status</th>                                  
                                 </tr>
                             </thead>
@@ -93,36 +92,31 @@
 
 </div>
 
-
 <!-- ============================================================== -->
 <!-- End Page content -->
 <!-- ============================================================== -->
 
 <!-- Form Add product -->
-<div id="addProductModal" class="modal fade">
+<div id="addAdminModal" class="modal fade">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form method="POST" action="/editProduct/store" enctype="multipart/form-data">
+            <form method="POST" action="/editAccount/store">
                 <div class="modal-header">						
-                    <h4 class="modal-title">Add Product</h4>
+                    <h4 class="modal-title">Add Account</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 </div>
                 <div class="modal-body">				
                     <div class="form-group">
-                        <label>Tên Sách</label>
-                        <input type="text" class="form-control" name="name" required>
+                        <label>Email</label>
+                        <input type="email" class="form-control" name="name" required>
                     </div>
                     <div class="form-group">
-                        <label>Loại Sách</label>
-                        <input type="text" class="form-control" name="type" required>
+                        <label>Password</label>
+                        <input type="password" class="form-control" name="type" required>
                     </div>
                     <div class="form-group">
-                        <label>Giá</label>
-                        <input type="number" class="form-control" name="price" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Ảnh</label><br>
-                        <input type="file" name="image" required>
+                        <label>Confirm Password</label>
+                        <input type="password" class="form-control" name="type" required>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -133,22 +127,3 @@
     </div>
 </div>
 <!-- End Form add product -->
-
-<form name="deleteProduct" method="POST"></form>
-
-<script>
-    function statusFunc(event){
-        const formDelete = document.forms['deleteProduct'];
-        const btn = event.target;
-        if(btn.value == "Hiden")
-        {
-            formDelete.action = '/editProduct/active/' + btn.id;
-            formDelete.submit();
-        }
-        else
-        {
-            formDelete.action = '/editProduct/hiden/' + btn.id;
-            formDelete.submit();
-        }
-    }
-</script>

@@ -1,7 +1,7 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
 const ProductController = require('./productController');
-const upload = require('../upload/multer');
+const upload = require('../../uploadIMG/multer');
 
 /* GET home page. */
 
@@ -11,7 +11,7 @@ router.post('/store', upload.single('image'), ProductController.store);
 
 // update product
 router.get('/update/:id', ProductController.update);
-router.put('/saveUpdate/:id', ProductController.saveUpdate);
+router.put('/saveUpdate/:id', upload.single('image'),ProductController.saveUpdate);
 
 //delete product
 router.post('/hiden/:id', ProductController.hiden);

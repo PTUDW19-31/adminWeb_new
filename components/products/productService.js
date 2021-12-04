@@ -1,8 +1,6 @@
 //const { options, report } = require('.');
 const {models} = require('../../models')
-
-
-
+const cloudImage = require('../../uploadIMG/cloudinary');
 
 
 
@@ -28,13 +26,15 @@ exports.active = (req) => {
     );
 }
 
-exports.store = (req, result) => {
+exports.store = async(req) => {
+    const result = await cloudImage.uploadIMG(req.file.path);
     return models.sach.findOrCreate({
         where: {
             TENSACH: req.body.name,
             LOAISACH: req.body.type,
             GIA: req.body.price,
-            IMAGE: result.secure_url
+            IMAGE: result.secure_url,
+            IMAGE_PUBLICID: result.public_id
         }
     });
 }
@@ -47,14 +47,28 @@ exports.update = (req) => {
     });
 }
 
-exports.saveUpdate = (req) => {
+exports.saveUpdate = async(req) => {
+    if(req.file){
+        const book = await models.sach.findOne({where: {MASACH: req.params.id}});
+        const result = await cloudImage.updateIMG(req.file.path, book.IMAGE_PUBLICID);
+        return models.sach.update(
+            {
+                MASACH: req.body.id,
+                TENSACH: req.body.name,
+                LOAISACH: req.body.type,
+                GIA: req.body.price,
+                IMAGE: result.secure_url,
+                IMAGE_PUBLICID: result.public_id
+            },
+            { where: { MASACH: req.params.id } }
+        ); 
+    }
     return models.sach.update(
         {
             MASACH: req.body.id,
             TENSACH: req.body.name,
             LOAISACH: req.body.type,
             GIA: req.body.price,
-            IMAGE: req.body.image
         },
         { where: { MASACH: req.params.id } }
     );

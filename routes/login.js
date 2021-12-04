@@ -3,7 +3,7 @@ const router = express.Router();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Asbab - Dashboard' });
+  res.render('login', { layout: false} );
 });
 
 module.exports = router;

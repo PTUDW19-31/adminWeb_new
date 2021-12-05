@@ -26,6 +26,14 @@ module.exports = function(sequelize, DataTypes) {
     NGAYSINH: {
       type: DataTypes.DATEONLY,
       allowNull: true
+    },
+    IDACCOUNT: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      references: {
+        model: 'account',
+        key: 'ID'
+      }
     }
   }, {
     sequelize,
@@ -38,6 +46,13 @@ module.exports = function(sequelize, DataTypes) {
         using: "BTREE",
         fields: [
           { name: "MAKH" },
+        ]
+      },
+      {
+        name: "fk_khachhang_account_idx",
+        using: "BTREE",
+        fields: [
+          { name: "IDACCOUNT" },
         ]
       },
     ]

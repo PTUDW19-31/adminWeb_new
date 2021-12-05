@@ -16,12 +16,13 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false
     },
     OWNER: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      references: {
-        model: 'sach',
-        key: 'MASACH'
-      }
+      type: DataTypes.STRING(200),
+      allowNull: true
+    },
+    ROLE: {
+      type: DataTypes.STRING(20),
+      allowNull: true,
+      defaultValue: "User"
     },
     STATUS: {
       type: DataTypes.STRING(20),
@@ -39,13 +40,6 @@ module.exports = function(sequelize, DataTypes) {
         using: "BTREE",
         fields: [
           { name: "ID" },
-        ]
-      },
-      {
-        name: "fk_account_sach",
-        using: "BTREE",
-        fields: [
-          { name: "OWNER" },
         ]
       },
     ]

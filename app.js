@@ -7,11 +7,13 @@ const logger = require('morgan');
 const compression = require('compression');
 const helmet = require('helmet');
 const methodOverride = require('method-override');
-const loginRouter = require('./routes/login');
+const authRouter = require('./auth/authRouter');
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const productsRouter = require('./components/products/index');
 const accountsRouter = require('./components/accounts/index');
+const session = require('express-session');
+const passport = require('./auth/passport');
 const app = express();
 
 // view engine setup
@@ -24,13 +26,20 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(methodOverride('_method'));
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(session({ secret: process.env.SESSION_SECRET }));
+app.use(passport.initialize());
+app.use(passport.session());
 
+app.use((req, res, next) => {
+  res.locals.user = req.user;
+  next();
+})
 
 app.use('/editAccount', accountsRouter);
 app.use('/editProduct', productsRouter);
 app.use('/users', usersRouter);
 app.use('/dashboard', indexRouter);
-app.use('/', loginRouter);
+app.use('/', authRouter);
 
 
 

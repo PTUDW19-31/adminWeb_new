@@ -22,6 +22,8 @@ function initModels(sequelize) {
   khachhang.belongsToMany(sach, { as: 'MASACH_sach_giohangs', through: giohang, foreignKey: "MAKH", otherKey: "MASACH" });
   sach.belongsToMany(hoadon, { as: 'SOHD_hoadons', through: chitiethoadon, foreignKey: "MASACH", otherKey: "SOHD" });
   sach.belongsToMany(khachhang, { as: 'MAKH_khachhangs', through: giohang, foreignKey: "MASACH", otherKey: "MAKH" });
+  khachhang.belongsTo(account, { as: "IDACCOUNT_account", foreignKey: "IDACCOUNT"});
+  account.hasMany(khachhang, { as: "khachhangs", foreignKey: "IDACCOUNT"});
   chitiethoadon.belongsTo(hoadon, { as: "SOHD_hoadon", foreignKey: "SOHD"});
   hoadon.hasMany(chitiethoadon, { as: "chitiethoadons", foreignKey: "SOHD"});
   comment.belongsTo(khachhang, { as: "MAKH_khachhang", foreignKey: "MAKH"});
@@ -30,8 +32,6 @@ function initModels(sequelize) {
   khachhang.hasMany(giohang, { as: "giohangs", foreignKey: "MAKH"});
   hoadon.belongsTo(khachhang, { as: "MAKH_khachhang", foreignKey: "MAKH"});
   khachhang.hasMany(hoadon, { as: "hoadons", foreignKey: "MAKH"});
-  account.belongsTo(sach, { as: "OWNER_sach", foreignKey: "OWNER"});
-  sach.hasMany(account, { as: "accounts", foreignKey: "OWNER"});
   chitiethoadon.belongsTo(sach, { as: "MASACH_sach", foreignKey: "MASACH"});
   sach.hasMany(chitiethoadon, { as: "chitiethoadons", foreignKey: "MASACH"});
   chitietsach.belongsTo(sach, { as: "MASACH_sach", foreignKey: "MASACH"});

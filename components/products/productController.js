@@ -18,6 +18,7 @@ exports.store = async (req, res, next) => {
     catch(err){
         res.status(401).json("Something went wrong!");
     }
+
 };
 
 // delete
@@ -37,34 +38,43 @@ exports.saveUpdate = async (req, res, next) => {
 };
 
 exports.update = async (req, res, next) => {
-    const product = await productService.update(req);
-    res.render('formUpdatePro', { product });
+    if(req.user){
+        const product = await productService.update(req);
+        res.render('formUpdatePro', { product });
+    } else{
+        res.redirect('/');
+    }
 }
 
 //list
 exports.list = async (req, res, next) => {
-    const itemPerPage = 7;
-    const page = !isNaN(req.query.page) && req.query.page > 0 ? req.query.page - 1 : 0;
-    const products = await productService.list(page,itemPerPage);
-    const TotalPage = Math.ceil(products.count/itemPerPage) > page + 1 ? Math.ceil(products.count/itemPerPage) : page + 1
-    const pagItems = pagination.paginationFunc(page+1, TotalPage);
+    if(req.user){
+        const itemPerPage = 10;
+        const page = !isNaN(req.query.page) && req.query.page > 0 ? req.query.page - 1 : 0;
+        const products = await productService.list(page,itemPerPage);
+        const TotalPage = Math.ceil(products.count/itemPerPage) > page + 1 ? Math.ceil(products.count/itemPerPage) : page + 1
+        const pagItems = pagination.paginationFunc(page+1, TotalPage);
 
-    if(!products){
-        res.status(401).json("Something went wrong!");
-    } 
+        if(!products){
+            res.status(401).json("Something went wrong!");
+        } 
+        
+        for(let items of products.rows){
+            if(items.STATUS == 'Hiden'){
+                items.COLORSTATUS = 'danger'
+            }
+            else{
+                items.COLORSTATUS = 'success'
+            }
+        };
+        res.render('editProduct', {
+            Items: pagItems,
+            products: products.rows
+        });
+    } else{
+        res.redirect('/');
+    }
     
-    for(let items of products.rows){
-        if(items.STATUS == 'Hiden'){
-            items.COLORSTATUS = 'danger'
-        }
-        else{
-            items.COLORSTATUS = 'success'
-        }
-    };
-    res.render('editProduct', {
-        Items: pagItems,
-        products: products.rows
-    });
 }
 
 

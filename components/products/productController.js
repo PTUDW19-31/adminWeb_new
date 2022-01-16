@@ -7,15 +7,16 @@ const productService = require('./productService');
 //store
 exports.store = async (req, res, next) => {
     try {    
-        const [book, created] = await productService.store(req);
-        if(created){
-            return res.redirect('back');
-        }
-        else {
-            res.status(401).json("Sản phẩm đã tồn tại!");
-        }
+        const created = await productService.store(req);
+        // if(created){
+        return res.redirect('back');
+        // }
+        // else {
+        //     res.status(401).json("Sản phẩm đã tồn tại!");
+        // }
     }
     catch(err){
+        console.log(err);
         res.status(401).json("Something went wrong!");
     }
 

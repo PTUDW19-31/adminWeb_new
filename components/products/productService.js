@@ -1,5 +1,5 @@
 //const { options, report } = require('.');
-const {models} = require('../../models')
+const {models, sequelize} = require('../../models')
 const cloudImage = require('../../uploadIMG/cloudinary');
 
 
@@ -28,14 +28,23 @@ exports.active = (req) => {
 
 exports.store = async(req) => {
     const result = await cloudImage.uploadIMG(req.file.path);
-    return models.sach.findOrCreate({
-        where: {
-            TENSACH: req.body.name,
-            LOAISACH: req.body.type,
-            GIA: req.body.price,
-            IMAGE: result.secure_url,
-            IMAGE_PUBLICID: result.public_id
-        }
+    sequelize.transaction(async (t) => {
+        const book = await models.sach.create({            
+                TENSACH: req.body.name,
+                LOAISACH: req.body.type,
+                GIA: req.body.price,
+                IMAGE: result.secure_url,
+                IMAGE_PUBLICID: result.public_id
+            }, {transaction: t});
+        if (book) {
+            await models.chitietsach.create({
+                    MASACH: book.MASACH,
+                    TACGIA: req.body.author,
+                    NGAYXB: req.body.publishDate,
+                    MOTA: req.body.description,
+                }
+                , {transaction: t})
+        }     
     });
 }
 
@@ -44,6 +53,10 @@ exports.update = (req) => {
         where: {
             MASACH: req.params.id
         },
+        include: [{
+            model: models.chitietsach, 
+            as: 'chitietsach',
+        }]
     });
 }
 

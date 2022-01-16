@@ -61,6 +61,13 @@ exports.update = (req) => {
 }
 
 exports.saveUpdate = async(req) => {
+    models.chitietsach.update(
+        {
+            MASACH: req.body.id,
+            TACGIA: req.body.author,
+            NGAYXB: req.body.publishDate,
+            MOTA: req.body.description
+        }, { where: { MASACH: req.params.id } })
     if(req.file){
         const book = await models.sach.findOne({where: {MASACH: req.params.id}});
         const result = await cloudImage.updateIMG(req.file.path, book.IMAGE_PUBLICID);

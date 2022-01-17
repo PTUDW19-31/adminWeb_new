@@ -17,7 +17,11 @@ module.exports = function(sequelize, DataTypes) {
     },
     MAKH: {
       type: DataTypes.INTEGER,
-      allowNull: false
+      allowNull: false,
+      references: {
+        model: 'khachhang',
+        key: 'MAKH'
+      }
     },
     NOIDUNG: {
       type: DataTypes.TEXT,
@@ -42,6 +46,13 @@ module.exports = function(sequelize, DataTypes) {
         using: "BTREE",
         fields: [
           { name: "ID" },
+        ]
+      },
+      {
+        name: "fk_comment_khachhang",
+        using: "BTREE",
+        fields: [
+          { name: "MAKH" },
         ]
       },
       {

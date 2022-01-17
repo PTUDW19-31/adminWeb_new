@@ -2,6 +2,7 @@ const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
   return sequelize.define('khachhang', {
     MAKH: {
+      autoIncrement: true,
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true,
@@ -28,7 +29,11 @@ module.exports = function(sequelize, DataTypes) {
     },
     IDCART: {
       type: DataTypes.INTEGER,
-      allowNull: true
+      allowNull: false,
+      references: {
+        model: 'giohang',
+        key: 'IDCART'
+      }
     }
   }, {
     sequelize,
@@ -38,13 +43,6 @@ module.exports = function(sequelize, DataTypes) {
       {
         name: "PRIMARY",
         unique: true,
-        using: "BTREE",
-        fields: [
-          { name: "MAKH" },
-        ]
-      },
-      {
-        name: "fk_khachhang_account1_idx",
         using: "BTREE",
         fields: [
           { name: "MAKH" },

@@ -9,7 +9,6 @@ var _hoadon = require("./hoadon");
 var _khachhang = require("./khachhang");
 var _sach = require("./sach");
 var _sach_has_category = require("./sach_has_category");
-var _thanhtoan = require("./thanhtoan");
 var _unknowcart = require("./unknowcart");
 
 function initModels(sequelize) {
@@ -23,7 +22,6 @@ function initModels(sequelize) {
   var khachhang = _khachhang(sequelize, DataTypes);
   var sach = _sach(sequelize, DataTypes);
   var sach_has_category = _sach_has_category(sequelize, DataTypes);
-  var thanhtoan = _thanhtoan(sequelize, DataTypes);
   var unknowcart = _unknowcart(sequelize, DataTypes);
 
   category.belongsToMany(sach, { as: 'MASACH_sach_sach_has_categories', through: sach_has_category, foreignKey: "CATEGORY_ID", otherKey: "MASACH" });
@@ -34,10 +32,12 @@ function initModels(sequelize) {
   account.hasOne(khachhang, { as: "khachhang", foreignKey: "MAKH"});
   sach_has_category.belongsTo(category, { as: "CATEGORY", foreignKey: "CATEGORY_ID"});
   category.hasMany(sach_has_category, { as: "sach_has_categories", foreignKey: "CATEGORY_ID"});
+  khachhang.belongsTo(giohang, { as: "IDCART_giohang", foreignKey: "IDCART"});
+  giohang.hasMany(khachhang, { as: "khachhangs", foreignKey: "IDCART"});
   chitiethoadon.belongsTo(hoadon, { as: "SOHD_hoadon", foreignKey: "SOHD"});
   hoadon.hasMany(chitiethoadon, { as: "chitiethoadons", foreignKey: "SOHD"});
-  thanhtoan.belongsTo(hoadon, { as: "SOHD_hoadon", foreignKey: "SOHD"});
-  hoadon.hasMany(thanhtoan, { as: "thanhtoans", foreignKey: "SOHD"});
+  comment.belongsTo(khachhang, { as: "MAKH_khachhang", foreignKey: "MAKH"});
+  khachhang.hasMany(comment, { as: "comments", foreignKey: "MAKH"});
   hoadon.belongsTo(khachhang, { as: "MAKH_khachhang", foreignKey: "MAKH"});
   khachhang.hasMany(hoadon, { as: "hoadons", foreignKey: "MAKH"});
   chitiethoadon.belongsTo(sach, { as: "MASACH_sach", foreignKey: "MASACH"});
@@ -62,7 +62,6 @@ function initModels(sequelize) {
     khachhang,
     sach,
     sach_has_category,
-    thanhtoan,
     unknowcart,
   };
 }

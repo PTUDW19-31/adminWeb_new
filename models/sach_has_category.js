@@ -34,17 +34,17 @@ module.exports = function(sequelize, DataTypes) {
         ]
       },
       {
+        name: "fk_sach_has_category_category1_idx",
+        using: "BTREE",
+        fields: [
+          { name: "CATEGORY_ID" },
+        ]
+      },
+      {
         name: "fk_sach_has_category_sach1_idx",
         using: "BTREE",
         fields: [
           { name: "MASACH" },
-        ]
-      },
-      {
-        name: "fk_sach_has_category_category_idx",
-        using: "BTREE",
-        fields: [
-          { name: "CATEGORY_ID" },
         ]
       },
     ]

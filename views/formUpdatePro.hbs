@@ -30,11 +30,7 @@
                             <div class="form-group">
                                 <label>Tên Sách</label>
                                 <input type="text" class="form-control" name="name" value="{{TENSACH}}">
-                            </div>
-                            <div class="form-group">
-                                <label>Loại Sách</label>
-                                <input type="text" class="form-control" name="type" value="{{LOAISACH}}">
-                            </div>
+                            </div>                            
                             <div class="form-group">
                                 <label>Giá</label>
                                 <input type="number" class="form-control" name="price" value="{{GIA}}">
@@ -47,9 +43,19 @@
                                 <label>Ngày xuất bản</label>
                                 <input type="date" class="form-control" name="publishDate" value="{{chitietsach.NGAYXB}}">
                             </div>
+                            <div class="form-group mt-1">
+                                <label>Thể Loại</label>
+                                <div class="container" style="border : 1px solid; ">
+                                    <div class="row p-2 ">
+                                        {{#each ../Category}}
+                                            {{category this.CATEGORY_ID this.NAME ../../categoryOfBook}}
+                                        {{/each}}
+                                    </div>
+                                </div>
+                            </div>
                             <div class="form-group">
                                 <label>Mô tả</label>
-                                <input type="text" class="form-control" name="description" value="{{chitietsach.MOTA}}">
+                                <textarea class="form-control" cols="86" rows="7" placeholder="Mô tả sách" name="description">{{chitietsach.MOTA}}</textarea>
                             </div>
                             <div class="form-group">
                                 <label>Ảnh</label><br>

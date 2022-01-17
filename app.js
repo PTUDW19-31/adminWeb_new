@@ -1,23 +1,37 @@
-   
 const createError = require('http-errors');
 const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
-const compression = require('compression');
-const helmet = require('helmet');
 const methodOverride = require('method-override');
+const exphbs = require('express-handlebars')
+const express_handlebars_sections = require('express-handlebars-sections');
+const session = require('express-session');
+const passport = require('./auth/passport');
+const app = express();
+const { allowInsecurePrototypeAccess } = require('@handlebars/allow-prototype-access');
+const Handlebars = require('handlebars');
+
 const authRouter = require('./auth/authRouter');
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const productsRouter = require('./components/products/index');
 const accountsRouter = require('./components/accounts/index');
-const session = require('express-session');
-const passport = require('./auth/passport');
-const app = express();
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
+app.engine(
+  '.hbs',
+  exphbs.engine({
+      extname :'hbs',
+      helpers: require('./helper/handlebar'),
+      handlebars: allowInsecurePrototypeAccess(Handlebars),
+      layoutsDir: 'views',
+      defaultLayout: 'layout',
+  })
+);
+express_handlebars_sections(exphbs);
 app.set('view engine', 'hbs');
 
 app.use(logger('dev'));

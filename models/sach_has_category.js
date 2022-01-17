@@ -1,39 +1,27 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('comment', {
-    ID: {
-      autoIncrement: true,
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      primaryKey: true
-    },
+  return sequelize.define('sach_has_category', {
     MASACH: {
       type: DataTypes.INTEGER,
       allowNull: false,
+      primaryKey: true,
       references: {
         model: 'sach',
         key: 'MASACH'
       }
     },
-    MAKH: {
+    CATEGORY_ID: {
       type: DataTypes.INTEGER,
-      allowNull: false
-    },
-    NOIDUNG: {
-      type: DataTypes.TEXT,
-      allowNull: false
-    },
-    CREATE_AT: {
-      type: DataTypes.DATE,
-      allowNull: true
-    },
-    UPDATE_AT: {
-      type: DataTypes.DATE,
-      allowNull: true
+      allowNull: false,
+      primaryKey: true,
+      references: {
+        model: 'category',
+        key: 'CATEGORY_ID'
+      }
     }
   }, {
     sequelize,
-    tableName: 'comment',
+    tableName: 'sach_has_category',
     timestamps: false,
     indexes: [
       {
@@ -41,14 +29,22 @@ module.exports = function(sequelize, DataTypes) {
         unique: true,
         using: "BTREE",
         fields: [
-          { name: "ID" },
+          { name: "MASACH" },
+          { name: "CATEGORY_ID" },
         ]
       },
       {
-        name: "fk_comment_sach",
+        name: "fk_sach_has_category_sach1_idx",
         using: "BTREE",
         fields: [
           { name: "MASACH" },
+        ]
+      },
+      {
+        name: "fk_sach_has_category_category_idx",
+        using: "BTREE",
+        fields: [
+          { name: "CATEGORY_ID" },
         ]
       },
     ]

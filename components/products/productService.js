@@ -28,24 +28,30 @@ exports.active = (req) => {
 
 exports.store = async(req) => {
     const result = await cloudImage.uploadIMG(req.file.path);
-    sequelize.transaction(async (t) => {
-        const book = await models.sach.create({            
-                TENSACH: req.body.name,
-                LOAISACH: req.body.type,
-                GIA: req.body.price,
-                IMAGE: result.secure_url,
-                IMAGE_PUBLICID: result.public_id
-            }, {transaction: t});
-        if (book) {
-            await models.chitietsach.create({
+    const book = await models.sach.create({            
+            TENSACH: req.body.name,
+            LOAISACH: req.body.type,
+            GIA: req.body.price,
+            IMAGE: result.secure_url,
+            IMAGE_PUBLICID: result.public_id
+        });
+    if (book) {
+        models.chitietsach.create({
+                MASACH: book.MASACH,
+                TACGIA: req.body.author,
+                NGAYXB: req.body.publishDate,
+                MOTA: req.body.description,
+            })
+        if (req.body.category) {
+            for (const id of req.body.category) {
+                models.sach_has_category.create({
                     MASACH: book.MASACH,
-                    TACGIA: req.body.author,
-                    NGAYXB: req.body.publishDate,
-                    MOTA: req.body.description,
-                }
-                , {transaction: t})
-        }     
-    });
+                    CATEGORY_ID: id,
+                })
+            };
+        }          
+    }     
+    
 }
 
 exports.update = (req) => {
@@ -83,6 +89,18 @@ exports.saveUpdate = async(req) => {
             { where: { MASACH: req.params.id } }
         ); 
     }
+    await models.sach_has_category.destroy({
+        where: {masach : req.params.id}
+      })
+  
+    if (req.body.category) {
+        for (const element of req.body.category) {
+            await models.sach_has_category.create({
+                MASACH: req.params.id,
+                CATEGORY_ID: element,
+                });
+        };
+    }
     return models.sach.update(
         {
             MASACH: req.body.id,
@@ -92,4 +110,21 @@ exports.saveUpdate = async(req) => {
         },
         { where: { MASACH: req.params.id } }
     );
+    
+}
+exports.addCategory = async(req) => {
+    return models.category.findOrCreate({
+        where: {
+            NAME: req.body.category
+        }
+    })
+}
+exports.getCategory = async() => {
+    return models.category.findAll({raw: true});
+}
+exports.getBookCategory = async(req) => {
+    return models.sach_has_category.findAll({
+        where: {MASACH: req.params.id},
+        raw: true
+    })
 }

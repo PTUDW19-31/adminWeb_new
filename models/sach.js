@@ -11,10 +11,6 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING(50),
       allowNull: true
     },
-    LOAISACH: {
-      type: DataTypes.STRING(50),
-      allowNull: true
-    },
     GIA: {
       type: DataTypes.FLOAT,
       allowNull: true

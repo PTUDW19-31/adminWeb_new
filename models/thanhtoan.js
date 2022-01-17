@@ -1,39 +1,39 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('comment', {
+  return sequelize.define('thanhtoan', {
     ID: {
       autoIncrement: true,
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true
     },
-    MASACH: {
+    SOHD: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
       references: {
-        model: 'sach',
-        key: 'MASACH'
+        model: 'hoadon',
+        key: 'SOHD'
       }
     },
-    MAKH: {
-      type: DataTypes.INTEGER,
-      allowNull: false
-    },
-    NOIDUNG: {
-      type: DataTypes.TEXT,
-      allowNull: false
-    },
-    CREATE_AT: {
-      type: DataTypes.DATE,
+    NGUOINHAN: {
+      type: DataTypes.STRING(45),
       allowNull: true
     },
-    UPDATE_AT: {
-      type: DataTypes.DATE,
+    DIACHI: {
+      type: DataTypes.TEXT,
+      allowNull: true
+    },
+    PHONE: {
+      type: DataTypes.STRING(11),
+      allowNull: true
+    },
+    STATUS: {
+      type: DataTypes.STRING(45),
       allowNull: true
     }
   }, {
     sequelize,
-    tableName: 'comment',
+    tableName: 'thanhtoan',
     timestamps: false,
     indexes: [
       {
@@ -45,10 +45,10 @@ module.exports = function(sequelize, DataTypes) {
         ]
       },
       {
-        name: "fk_comment_sach",
+        name: "fk_thanhtoan_hoadon_idx",
         using: "BTREE",
         fields: [
-          { name: "MASACH" },
+          { name: "SOHD" },
         ]
       },
     ]

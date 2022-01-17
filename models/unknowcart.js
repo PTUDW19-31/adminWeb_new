@@ -1,27 +1,20 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('hoadon', {
-    SOHD: {
-      autoIncrement: true,
-      type: DataTypes.INTEGER,
+  return sequelize.define('unknowcart', {
+    UNID: {
+      type: DataTypes.STRING(255),
       allowNull: false,
       primaryKey: true
     },
-    NGAYLAPHD: {
-      type: DataTypes.DATEONLY,
-      allowNull: true
-    },
-    MAKH: {
+    IDCART: {
+      autoIncrement: true,
       type: DataTypes.INTEGER,
       allowNull: false,
-      references: {
-        model: 'khachhang',
-        key: 'MAKH'
-      }
+      unique: "IDCART_UNIQUE"
     }
   }, {
     sequelize,
-    tableName: 'hoadon',
+    tableName: 'unknowcart',
     timestamps: false,
     indexes: [
       {
@@ -29,14 +22,15 @@ module.exports = function(sequelize, DataTypes) {
         unique: true,
         using: "BTREE",
         fields: [
-          { name: "SOHD" },
+          { name: "UNID" },
         ]
       },
       {
-        name: "fk_hoadon_khachhang1_idx",
+        name: "IDCART_UNIQUE",
+        unique: true,
         using: "BTREE",
         fields: [
-          { name: "MAKH" },
+          { name: "IDCART" },
         ]
       },
     ]

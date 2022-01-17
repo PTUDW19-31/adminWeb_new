@@ -7,7 +7,7 @@ const productService = require('./productService');
 //store
 exports.store = async (req, res, next) => {
     try {    
-        const created = await productService.store(req);
+        await productService.store(req);
         // if(created){
         return res.redirect('back');
         // }
@@ -41,7 +41,9 @@ exports.saveUpdate = async (req, res, next) => {
 exports.update = async (req, res, next) => {
     if(req.user){
         const product = await productService.update(req);
-        res.render('formUpdatePro', { product });
+        const Category = await productService.getCategory();
+        const categoryOfBook = await productService.getBookCategory(req);
+        res.render('formUpdatePro', { product, Category, categoryOfBook });
     } else{
         res.redirect('/');
     }
@@ -68,15 +70,34 @@ exports.list = async (req, res, next) => {
                 items.COLORSTATUS = 'success'
             }
         };
+        const category = await productService.getCategory()
         res.render('editProduct', {
             Items: pagItems,
-            products: products.rows
+            products: products.rows,
+            category,
         });
     } else{
         res.redirect('/');
     }
-    
 }
+
+exports.addCategory = async (req, res, next) => {
+    try {    
+        const [category, created] = await productService.addCategory(req);
+        if(created){
+            return res.redirect('back');
+        }
+        else {
+            res.status(401).json("Thể loại đã tồn tại!");
+        }
+    }
+    catch(err){
+        console.log(err);
+        res.status(401).json("Something went wrong!");
+    }
+
+};
+
 
 
 

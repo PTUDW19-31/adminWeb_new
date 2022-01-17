@@ -9,6 +9,8 @@ const upload = require('../../uploadIMG/multer');
 // add product
 router.post('/store', upload.single('image'), ProductController.store);
 
+//add category
+router.post('/addCategory', ProductController.addCategory);
 // update product
 router.get('/update/:id', ProductController.update);
 router.put('/saveUpdate/:id', upload.single('image'),ProductController.saveUpdate);

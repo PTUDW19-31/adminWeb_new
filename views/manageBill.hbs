@@ -24,17 +24,20 @@
                         <div class="mb-2">
                             <div class="row">
                                 <div class="col-12 text-sm-center form-inline">
-                                    {{!-- <div class="form-group mr-2">
-                                        <a href="#addAdminModal" data-toggle="modal">
-                                            <button class="btn btn-primary">
-                                                <i class="mdi mdi-plus-circle mr-2"></i>
-                                                <span>Add Admin Account</span>
+                                     <div class="form-group">
+                                        <form action="?title=">
+                                            <input id="demo-input-search2" type="text" placeholder="Search"
+                                            class="form-control" name="search" value="{{search}}">
+
+												<labe for="start">Date:</label>
+												<input type="date" id="start" name="chooseDate" min="2018-03" value={{chooseDate}}>
+                                            <button class="-outline-success my-2 my-sm-0 btn btn-primary" type="submit">
+                                                <i class="fa fa-search mr-2"></i>
+                                                <span>Search</span>
                                             </button>
-                                        </a>                                             
-                                    </div> --}}
-                                    <div class="form-group">
-                                        <input id="demo-input-search2" type="text" placeholder="Search" class="form-control" autocomplete="off">
-                                    </div>                         
+                                        </form>
+                                        
+                                    </div>                     
                                 </div>
                             </div>
                             <div class="row">

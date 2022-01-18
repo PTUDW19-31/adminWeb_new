@@ -6,7 +6,9 @@ exports.list = async (req, res, next) => {
     if(req.user){
         const itemPerPage = 10;
         const page = !isNaN(req.query.page) && req.query.page > 0 ? req.query.page - 1 : 0;
-        const bills = await billService.list(page,itemPerPage);
+        const chooseDate = req.query.chooseDate || "";
+        const search = req.query.search || "";
+        const bills = await billService.list(page,itemPerPage, search, chooseDate);
         const TotalPage = Math.ceil(bills.count/itemPerPage) > page + 1 ? Math.ceil(bills.count/itemPerPage) : page + 1
         const pagItems = pagination.paginationFunc(page+1, TotalPage);
 
@@ -16,7 +18,9 @@ exports.list = async (req, res, next) => {
 
         res.render('manageBill', {
             Items: pagItems,
-            bills: bills.rows
+            bills: bills.rows,
+            chooseDate,
+            search
         });
     } else{
         res.redirect('/');

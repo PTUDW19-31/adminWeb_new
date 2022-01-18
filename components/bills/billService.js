@@ -1,9 +1,25 @@
 const {models} = require('../../models');
-const bcrypt = require('bcryptjs'); 
+const {Op} = require('sequelize')
 
 
-exports.list = (page, itemPerPage) => {
-    return models.hoadon.findAndCountAll({ offset: page*itemPerPage, limit: itemPerPage, raw: true });
+exports.list = (page, itemPerPage, search, chooseDate) => {
+    return models.hoadon.findAndCountAll({ 
+        where: {
+            [Op.and]: [
+                {NGAYLAPHD: {[Op.like]: '%' + chooseDate + '%'}},
+                {[Op.or]: [
+                    {SOHD: {[Op.like]: '%' + search + '%'}},
+                    {MAKH: {[Op.like]: '%' + search + '%'}},
+                    {NGUOINHAN: {[Op.like]: '%' + search + '%'}},
+                    {DIACHI: {[Op.like]: '%' + search + '%'}},
+                    {PHONE: {[Op.like]: '%' + search + '%'}},
+                    {STATUS: {[Op.like]: '%' + search + '%'}},
+                ]}
+            ]
+        },
+        offset: page*itemPerPage, 
+        limit: itemPerPage, raw: true 
+    });
 };  
 
 

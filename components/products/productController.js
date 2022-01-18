@@ -88,7 +88,7 @@ exports.addCategory = async (req, res, next) => {
             return res.redirect('back');
         }
         else {
-            res.status(401).json("Thể loại đã tồn tại!");
+            res.render("editProduct",{message: "Thể loại đã tồn tại!"});
         }
     }
     catch(err){

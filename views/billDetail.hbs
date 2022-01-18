@@ -1,0 +1,60 @@
+<div class="content-page">
+    <div class="content">
+
+        <!-- Start Content-->
+        <div class="container">
+            <div class="card">
+                <div class="card-body">
+                <div class="row mb-4">
+                    <div class="col-sm-6">
+                    <div>SỐ HÓA ĐƠN:  {{{billHD}}}</div>
+                    </div>
+                </div>
+
+                <div class="table-responsive-sm">
+                    <table class="table table-striped">
+                    <thead>
+                        <tr>
+                        <th class="center">Tên sách</th>
+                        <th>Số lượng</th>
+                        <th>Đơn giá</th>
+                        <th class="right">Thành tiền</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#each billdetail}}
+                        <tr>
+                        <td class="left">{{MASACH_sach.TENSACH}}</td>
+                        <td class="left">{{SOLUONG}}</td>
+                        <td class="right">{{DONGIA}}$</td>
+                        <td class="center">{{THANHTIEN}}$</td>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                    </table>
+                </div>
+                <div class="row">
+                    <div class="col-lg-4 col-sm-5">
+                    </div>
+                    <div class="col-lg-4 col-sm-5 ml-auto">
+                    <table class="table table-clear">
+                        <tbody>
+                        <tr>
+                            <td class="left">
+                            <strong>Total Bill:</strong>
+                            </td>
+                            <td class="right">
+                            <strong>{{totalBill}}$</strong>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Form Edit Product -->
+    </div>
+</div>
+

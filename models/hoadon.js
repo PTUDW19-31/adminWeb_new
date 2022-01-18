@@ -8,7 +8,7 @@ module.exports = function(sequelize, DataTypes) {
       primaryKey: true
     },
     NGAYLAPHD: {
-      type: DataTypes.DATEONLY,
+      type: DataTypes.TEXT,
       allowNull: true
     },
     MAKH: {
@@ -18,6 +18,23 @@ module.exports = function(sequelize, DataTypes) {
         model: 'khachhang',
         key: 'MAKH'
       }
+    },
+    NGUOINHAN: {
+      type: DataTypes.STRING(45),
+      allowNull: true
+    },
+    DIACHI: {
+      type: DataTypes.TEXT,
+      allowNull: true
+    },
+    PHONE: {
+      type: DataTypes.STRING(11),
+      allowNull: true
+    },
+    STATUS: {
+      type: DataTypes.STRING(45),
+      allowNull: true,
+      defaultValue: "Chưa thanh toán"
     }
   }, {
     sequelize,

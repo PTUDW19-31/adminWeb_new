@@ -17,7 +17,7 @@ const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const productsRouter = require('./components/products/index');
 const accountsRouter = require('./components/accounts/index');
-
+const billsRouter = require('./components/bills/index');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -51,6 +51,7 @@ app.use((req, res, next) => {
 
 app.use('/editAccount', accountsRouter);
 app.use('/editProduct', productsRouter);
+app.use('/manageBill', billsRouter);
 app.use('/users', usersRouter);
 app.use('/dashboard', indexRouter);
 app.use('/', authRouter);

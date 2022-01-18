@@ -36,3 +36,23 @@ exports.add = async(email, password) => {
         ROLE: 'Admin'
     });
 }
+exports.hiden = (req) => {
+    if (req.params.id == req.user.accountID) {
+        return false
+    }
+    return models.account.update(
+        {
+            STATUS: 'Hiden'
+        },
+        { where: { ID: req.params.id } }
+    );
+}
+
+exports.active = (req) => {
+    return models.account.update(
+        {
+            STATUS: 'Active'
+        },
+        { where: { ID: req.params.id } }
+    );
+}

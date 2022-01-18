@@ -16,7 +16,7 @@ exports.list = async (req, res, next) => {
         } 
         
         for(let items of accounts.rows){
-            if(items.STATUS == 'Block'){
+            if(items.STATUS == 'Hiden'){
                 items.COLORSTATUS = 'danger'
             }
             else{
@@ -49,3 +49,15 @@ exports.add = async(req, res) => {
         return res.render('editAccount',{message: 'Something went wrong !!! Try again!'});
     }
 }
+
+exports.hiden = async (req, res, next) => {
+    const isHiden = await accountService.hiden(req);
+    if (!isHiden) {
+        return res.render('editAccount',{message: 'Cannot block your current log in account'});
+    }
+    res.redirect('back');
+};
+exports.active = async (req, res, next) => {
+    await accountService.active(req);
+    res.redirect('back');
+};

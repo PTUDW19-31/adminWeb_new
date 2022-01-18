@@ -69,7 +69,7 @@
                                     <td>{{OWNER}}</td>
                                     <td>{{ROLE}}</td>
                                     <td>
-                                        <input type="button" id ="{{MASACH}}" class="btn btn-{{COLORSTATUS}}" 
+                                        <input type="button" id ="{{ID}}" class="btn btn-{{COLORSTATUS}}" 
                                         data-toggle="tooltip" data-placement="right" title="Change Status"
                                         onclick="statusFunc(event)" value="{{STATUS}}">
                                         </input>
@@ -132,7 +132,22 @@
     </div>
 </div>
 <!-- End Form add admin account -->
+<form name="deleteAccount" method="POST"></form>
 <script>
+    function statusFunc(event){
+        const formDelete = document.forms['deleteAccount'];
+        const btn = event.target;
+        if(btn.value == "Hiden")
+        {
+            formDelete.action = '/editAccount/active/' + btn.id;
+            formDelete.submit();
+        }
+        else
+        {
+            formDelete.action = '/editAccount/hiden/' + btn.id;
+            formDelete.submit();
+        }
+    }
     function visibility(){
         let x = document.getElementById("password");
         if (x.type === "password") {

@@ -25,16 +25,25 @@
                             <div class="row">
                                 <div class="col-12 text-sm-center form-inline">
                                     <div class="form-group mr-2">
+                                        <div class="form-group">
+                                            <form action="?title=">
+                                                <input id="demo-input-search2" type="text" placeholder="Search"
+                                                class="form-control" name="title" value="" autocomplete="off">
+                                                <button class="btn btn-primary">
+                                                    <i class="mdi mdi-magnify mr-2"></i>
+                                                    <span>Search</span>
+                                                </button>
+                                            </form> 
+                                        </div>                                          
+                                    </div>
+                                    <div class="form-group mr-2">
                                         <a href="#addAdminModal" data-toggle="modal">
                                             <button class="btn btn-primary">
                                                 <i class="mdi mdi-plus-circle mr-2"></i>
                                                 <span>Add Admin Account</span>
                                             </button>
                                         </a>                                             
-                                    </div>
-                                    <div class="form-group">
-                                        <input id="demo-input-search2" type="text" placeholder="Search" class="form-control" autocomplete="off">
-                                    </div>                         
+                                    </div>                       
                                 </div>
                             </div>
                             <div class="row">
@@ -47,7 +56,6 @@
                                 <tr>
                                     <th>ID</th>
                                     <th>Email</th>
-                                    <th>Password</th>
                                     <th>Owner</th>
                                     <th>Role</th>
                                     <th>Status</th>                                  
@@ -58,7 +66,6 @@
                                 <tr>
                                     <td>{{ID}}</td>
                                     <td>{{EMAIL}}</td>
-                                    <td>{{PASSWORD}}</td>
                                     <td>{{OWNER}}</td>
                                     <td>{{ROLE}}</td>
                                     <td>
@@ -76,7 +83,7 @@
                          <div style="margin-top: 30px ">
                             <ul class="pagination justify-content-end">
                                 {{#each Items}}
-                                <li class="page-item{{#if cur}} active{{/if}}"><a class="page-link" href="/editAccount?page={{item}}">{{item}}</a></li>
+                                <li class="page-item{{#if cur}} active{{/if}}"><a class="page-link" href="/editAccount?page={{item}}&&title={{../title}}">{{item}}</a></li>
                                 {{/each}}
                             </ul>    
                         </div> 

@@ -1,9 +1,26 @@
 const {models} = require('../../models');
 const bcrypt = require('bcryptjs'); 
+const { Op } = require('sequelize');
 
-
-exports.list = (page, itemPerPage) => {
-    return models.account.findAndCountAll({ offset: page*itemPerPage, limit: itemPerPage, raw: true });
+exports.list = (page, itemPerPage, title) => {
+    var condition = '';
+    if (title) {
+      condition = title;
+    }
+    return models.account.findAndCountAll({ 
+        where: {
+            [Op.or]: [
+                {OWNER :{
+                    [Op.like]: '%' + condition + '%',
+                }},
+                {EMAIL:{
+                    [Op.like]: '%' + condition + '%',
+                }}
+            ]
+        },
+        offset: page*itemPerPage, 
+        limit: itemPerPage, raw: true 
+    });
 };  
 
 

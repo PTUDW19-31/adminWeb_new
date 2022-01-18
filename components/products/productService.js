@@ -1,11 +1,22 @@
 //const { options, report } = require('.');
 const {models, sequelize} = require('../../models')
 const cloudImage = require('../../uploadIMG/cloudinary');
+const { Op } = require('sequelize');
 
 
-
-exports.list = (page, itemPerPage) => {
-    return models.sach.findAndCountAll({ offset: page*itemPerPage, limit: itemPerPage, raw: true });
+exports.list = (page, itemPerPage, title) => {
+    var condition = '';
+    if (title) {
+      condition = title;
+    }
+    return models.sach.findAndCountAll({ 
+        where: {
+            TENSACH :{
+                [Op.like]: '%' + condition + '%',
+            }
+        },
+        offset: page*itemPerPage, 
+        limit: itemPerPage, raw: true });
 };  
 
 exports.hiden = (req) => {

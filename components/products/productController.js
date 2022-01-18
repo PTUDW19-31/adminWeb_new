@@ -2,8 +2,6 @@
 const pagination = require('../../public/js/pages/pagination');
 const productService = require('./productService');
 
-
-
 //store
 exports.store = async (req, res, next) => {
     try {    
@@ -54,7 +52,8 @@ exports.list = async (req, res, next) => {
     if(req.user){
         const itemPerPage = 10;
         const page = !isNaN(req.query.page) && req.query.page > 0 ? req.query.page - 1 : 0;
-        const products = await productService.list(page,itemPerPage);
+        const {title} = req.query
+        const products = await productService.list(page,itemPerPage, title);
         const TotalPage = Math.ceil(products.count/itemPerPage) > page + 1 ? Math.ceil(products.count/itemPerPage) : page + 1
         const pagItems = pagination.paginationFunc(page+1, TotalPage);
 
@@ -75,6 +74,7 @@ exports.list = async (req, res, next) => {
             Items: pagItems,
             products: products.rows,
             category,
+            title
         });
     } else{
         res.redirect('/');

@@ -6,7 +6,8 @@ exports.list = async (req, res, next) => {
     if(req.user){
         const itemPerPage = 10;
         const page = !isNaN(req.query.page) && req.query.page > 0 ? req.query.page - 1 : 0;
-        const accounts = await accountService.list(page,itemPerPage);
+        const {title} = req.query
+        const accounts = await accountService.list(page,itemPerPage, title);
         const TotalPage = Math.ceil(accounts.count/itemPerPage) > page + 1 ? Math.ceil(accounts.count/itemPerPage) : page + 1
         const pagItems = pagination.paginationFunc(page+1, TotalPage);
 

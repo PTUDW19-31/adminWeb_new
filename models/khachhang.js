@@ -29,11 +29,7 @@ module.exports = function(sequelize, DataTypes) {
     },
     IDCART: {
       type: DataTypes.INTEGER,
-      allowNull: false,
-      references: {
-        model: 'giohang',
-        key: 'IDCART'
-      }
+      allowNull: true
     }
   }, {
     sequelize,
@@ -46,13 +42,6 @@ module.exports = function(sequelize, DataTypes) {
         using: "BTREE",
         fields: [
           { name: "MAKH" },
-        ]
-      },
-      {
-        name: "fk_khachhang_giohang1_idx",
-        using: "BTREE",
-        fields: [
-          { name: "IDCART" },
         ]
       },
     ]

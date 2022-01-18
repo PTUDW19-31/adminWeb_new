@@ -32,8 +32,6 @@ function initModels(sequelize) {
   account.hasOne(khachhang, { as: "khachhang", foreignKey: "MAKH"});
   sach_has_category.belongsTo(category, { as: "CATEGORY", foreignKey: "CATEGORY_ID"});
   category.hasMany(sach_has_category, { as: "sach_has_categories", foreignKey: "CATEGORY_ID"});
-  khachhang.belongsTo(giohang, { as: "IDCART_giohang", foreignKey: "IDCART"});
-  giohang.hasMany(khachhang, { as: "khachhangs", foreignKey: "IDCART"});
   chitiethoadon.belongsTo(hoadon, { as: "SOHD_hoadon", foreignKey: "SOHD"});
   hoadon.hasMany(chitiethoadon, { as: "chitiethoadons", foreignKey: "SOHD"});
   comment.belongsTo(khachhang, { as: "MAKH_khachhang", foreignKey: "MAKH"});
